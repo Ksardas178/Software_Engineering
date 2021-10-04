@@ -25,14 +25,11 @@ begin
   var resSign := getSign(a, b);
   a := Abs(a);
   b := Abs(b);
-  loop b do Result += a;
-  if (resSign = -1) then Result := Result xor -1 + 1;
+  loop b do result += a;
+  if (resSign = -1) then result := result xor -1 + 1;
 end;
 
-static function CounterClass.substract(a, b: integer): integer;
-begin
-  result := a + 1 + (b xor -1);
-end;
+static function CounterClass.substract(a, b: integer): integer := a + 1 + (b xor -1);
 
 static function CounterClass.divide(a, b: integer): (integer, integer);
 begin
@@ -72,7 +69,7 @@ end;
 static function CounterClass.getSign(a, b: integer): integer;
 begin
   if (a = b) then exit;
-  Result := (Sign(a) = Sign(b)) ? 1 : -1;
+  result := (Sign(a) = Sign(b)) ? 1 : -1;
 end;
 
 {$endregion private methods}
