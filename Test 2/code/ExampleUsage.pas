@@ -1,7 +1,7 @@
 ﻿uses _CounterClass;
 
 begin
-  var (a, b) := ReadlnInteger2('Insert numbers:');
+  var (a, b) := ReadlnInteger2('Insert numbers: ');
   
   $'Miltiplication: {a} * {b} = {CounterClass.multiply(a,b)}'.Println;
   $'Substraction: {a} - {b} = {CounterClass.substract(a,b)}'.Println;
