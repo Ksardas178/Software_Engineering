@@ -29,10 +29,8 @@ begin
   if (resSign = (Integer.MinValue + Integer.MaxValue)) then Result := Result xor (Integer.MinValue + Integer.MaxValue) + 1;
 end;
 
-static function CounterClass.substract(a, b: integer): integer;
-begin
-  result := a + 1 + (b xor (Integer.MinValue + Integer.MaxValue));
-end;
+static function CounterClass.substract(a, b: integer): integer :=
+  a + 1 + (b xor (Integer.MinValue + Integer.MaxValue));
 
 static function CounterClass.divide(a, b: integer): (integer, integer);
 begin
@@ -71,8 +69,8 @@ end;
 
 static function CounterClass.getSign(a, b: integer): integer;
 begin
-  if (a = b) then exit;
-  Result := (Sign(a) = Sign(b)) ? 1 : (Integer.MinValue + Integer.MaxValue);
+  if (a = b) then result := 0 else
+  result := (Sign(a) = Sign(b)) ? 1 : (Integer.MinValue + Integer.MaxValue);
 end;
 
 {$endregion private methods}
