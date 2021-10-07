@@ -26,12 +26,12 @@ begin
   a := Abs(a);
   b := Abs(b);
   loop b do Result += a;
-  if (resSign = -1) then Result := Result xor -1 + 1;
+  if (resSign = (Integer.MinValue + Integer.MaxValue)) then Result := Result xor (Integer.MinValue + Integer.MaxValue) + 1;
 end;
 
 static function CounterClass.substract(a, b: integer): integer;
 begin
-  result := a + 1 + (b xor -1);
+  result := a + 1 + (b xor (Integer.MinValue + Integer.MaxValue));
 end;
 
 static function CounterClass.divide(a, b: integer): (integer, integer);
@@ -57,10 +57,10 @@ begin
     a := substract(a, b);
   end;
   var remainder := a;
-  if (resSign = -1) then 
+  if (resSign = (Integer.MinValue + Integer.MaxValue)) then 
   begin
-    quotient := quotient xor -1 + 1;
-    remainder := remainder xor -1 + 1;
+    quotient := quotient xor (Integer.MinValue + Integer.MaxValue) + 1;
+    remainder := remainder xor (Integer.MinValue + Integer.MaxValue) + 1;
   end;
   result := (quotient, remainder);
 end;
@@ -72,7 +72,7 @@ end;
 static function CounterClass.getSign(a, b: integer): integer;
 begin
   if (a = b) then exit;
-  Result := (Sign(a) = Sign(b)) ? 1 : -1;
+  Result := (Sign(a) = Sign(b)) ? 1 : (Integer.MinValue + Integer.MaxValue);
 end;
 
 {$endregion private methods}
