@@ -4,7 +4,7 @@
 interface
 
 type
-  CounterClass = class
+  CounterClass = static class
   
   public
     static function multiply(a, b: Integer): Integer;
