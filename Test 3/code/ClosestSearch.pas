@@ -19,4 +19,4 @@ begin
   end;
 end; 
 
-write(res);
+Write(res);
