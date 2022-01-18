@@ -5,19 +5,36 @@ namespace DockerApp
     enum Scales
     {
         celsius = 'c',
-        fahrenheit = 'f'
+        fahrenheit = 'f',
+        kelvin = 'k'
     }
 
     class ParseData
     {
         public Scales scaleFrom, scaleTo;
-        public int value;
+        public double value;
+        private bool valid;
 
-        public ParseData(string scaleFrom, string scaleTo, string value)
+        public ParseData(string scaleFrom, string value, string scaleTo)
         {
-            TryParseScale(scaleFrom, ref this.scaleFrom);
-            TryParseScale(scaleTo, ref this.scaleTo);
-            int.TryParse(value, out this.value);
+            valid = false;
+            if (!TryParseScale(scaleFrom, ref this.scaleFrom))
+            {
+                Console.WriteLine("Invalid 1st key. Check your input");
+            }
+            else if (!TryParseScale(scaleTo, ref this.scaleTo))
+            {
+                Console.WriteLine("Invald 2nd key. Check your input");
+            }
+            else if (!double.TryParse(value, out this.value))
+            {
+                Console.WriteLine("Invalid value. Check your input");
+            }
+            else
+            {
+                this.value = toKelvin(this.scaleFrom, this.value);
+                valid = CheckRange(this.value);
+            }
         }
 
         private bool TryParseScale(string arg, ref Scales scale)
@@ -32,9 +49,52 @@ namespace DockerApp
             return false;
         }
 
-        public int Convert()
+        private double toScale(Scales scale, double value)
         {
-            return 0;
+            //From Kelvin to desired scale
+            switch (scale)
+            {
+                case Scales.fahrenheit:
+                    return (value - 273.15) * 9 / 5 + 32;
+                case Scales.celsius:
+                    return value - 273.15;
+                default:
+                    return value;
+            }
+        }
+
+        private double toKelvin(Scales scale, double value)
+        {
+            //From input scale to Kelvin
+            switch (scale)
+            {
+                case Scales.celsius:
+                    return value + 273.15;
+                case Scales.fahrenheit:
+                    return (value - 32) * 5 / 9 + 273.15;
+                default:
+                    return value;
+            }
+        }
+
+        public void Convert()
+        {
+            if (valid)
+            {
+                double result = toScale(this.scaleTo, this.value);
+                Console.WriteLine($"Result: {result}\n");
+            }
+        }
+
+        private bool CheckRange(double value)
+        {
+            //Possible temperature range (Kelvin)
+            if (value >= 0 && value < 1.4168 * Math.Pow(10, 32) + 273.15)
+            {
+                return true;
+            }
+            Console.WriteLine("Unreachable temperature value. Check your input");
+            return false;
         }
     }
     class Program
@@ -46,21 +106,25 @@ namespace DockerApp
 Please specify your input as follows:
 [-c|-f] <VALUE> [-c|-f]
 -c — celsius degrees
--f — fahrenheit degrees"
+-f — fahrenheit degrees
+"
             );
-            if (args.Length < 3)
+            while (true)
             {
-                //TODO
-            }
-            else if (args.Length > 3)
-            {
-                //TODO
-            }
-            else
-            {
-                var parseData = new ParseData(args[0], args[1], args[2]);
-                int result = parseData.Convert();
-                Console.WriteLine($"\nResult: {result}");
+                args = Console.ReadLine().Split(' ');
+                if (args.Length < 3)
+                {
+                    Console.WriteLine("Too less arguments. Check your input");
+                }
+                else if (args.Length > 3)
+                {
+                    Console.WriteLine("Too much arguments. Check your input");
+                }
+                else
+                {
+                    var parseData = new ParseData(args[0], args[1], args[2]);
+                    parseData.Convert();
+                }
             }
         }
     }
