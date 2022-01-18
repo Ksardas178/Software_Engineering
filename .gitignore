@@ -11,9 +11,11 @@
 # Build results
 
 [Dd]ebug/
+sqlite3/
+*.vs/*
 ## [Rr]elease/
 x64/
-[Bb]in/
+# [Bb]in/
 [Oo]bj/
 
 # MSTest test Results

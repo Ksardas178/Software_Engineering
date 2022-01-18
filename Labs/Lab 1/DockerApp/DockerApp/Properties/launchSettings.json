@@ -1,8 +1,0 @@
-{
-  "profiles": {
-    "DockerApp": {
-      "commandName": "Project",
-      "commandLineArgs": "-c 100 -f"
-    }
-  }
-}
