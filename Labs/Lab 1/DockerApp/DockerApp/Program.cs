@@ -101,31 +101,19 @@ namespace DockerApp
     {
         static void Main(string[] args)
         {
-            Console.WriteLine(
-                @"This is a simple temperature converter. 
-Please specify your input as follows:
-[-c|-f] <VALUE> [-c|-f]
--c — celsius degrees
--f — fahrenheit degrees
-"
-            );
-            while (true)
+            if (args.Length < 3)
             {
-                args = Console.ReadLine().Split(' ');
-                if (args.Length < 3)
-                {
-                    Console.WriteLine("Too less arguments. Check your input");
-                }
-                else if (args.Length > 3)
-                {
-                    Console.WriteLine("Too much arguments. Check your input");
-                }
-                else
-                {
-                    var parseData = new ParseData(args[0], args[1], args[2]);
-                    parseData.Convert();
-                }
+                Console.WriteLine("Too less arguments. Check your input");
             }
+            else if (args.Length > 3)
+            {
+                Console.WriteLine("Too much arguments. Check your input");
+            }
+            else
+            {
+                var parseData = new ParseData(args[0], args[1], args[2]);
+                parseData.Convert();
+            }            
         }
     }
 }

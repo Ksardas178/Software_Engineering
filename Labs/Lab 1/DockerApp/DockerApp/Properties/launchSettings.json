@@ -3,6 +3,9 @@
     "DockerApp": {
       "commandName": "Project",
       "commandLineArgs": "-c 100 -f"
+    },
+    "Docker": {
+      "commandName": "Docker"
     }
   }
 }
